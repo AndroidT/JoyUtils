@@ -1,5 +1,7 @@
 package com.joysoft.andutils.ui;
 
+import android.view.View;
+
 /**
  * Created by fengmiao on 15/8/31.
  */
@@ -36,12 +38,31 @@ public interface FooterLayout {
 
     /**
      * 设置当前View的状态值
+     * 这个方法内只更新View的数据，不操作是否visible
      * @param State
      */
     public void setLayoutState(int State);
 
+
+    /**
+     * 显示footer
+     */
     public void showLayout();
 
+    /**
+     * 隐藏footer
+     */
     public void hideLayout();
 
+    /**
+     * 判断当前footer是否可见
+     * @return
+     */
+    public boolean isVisible();
+
+    /**
+     * 返回当前底部视图
+     * @return
+     */
+    public  View getFooterView();
 }

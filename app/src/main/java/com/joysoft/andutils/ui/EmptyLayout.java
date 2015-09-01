@@ -1,5 +1,7 @@
 package com.joysoft.andutils.ui;
 
+import android.view.View;
+
 /**
  * 占位Layout的接口，
  *
@@ -44,6 +46,8 @@ public interface EmptyLayout {
      * 设置没有数据时的状态
      */
     public void setStateEmptyLayout();
+
+    public void setOnLayoutClickListener(View.OnClickListener mListener);
 
 
 }
