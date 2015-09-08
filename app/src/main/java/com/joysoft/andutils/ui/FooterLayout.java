@@ -34,7 +34,7 @@ public interface FooterLayout {
 
 
 
-    public  int mLayoutState = -1;
+    public   int mLayoutState = -1;
 
     /**
      * 设置当前View的状态值

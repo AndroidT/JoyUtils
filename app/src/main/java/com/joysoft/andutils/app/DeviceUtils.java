@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.joysoft.andutils.common.BitmapUtils;
-import com.joysoft.utils.lg.Lg;
+import com.joysoft.andutils.lg.Lg;
 
 /**
  * 硬件工具类

@@ -45,8 +45,14 @@ public interface EmptyLayout {
     /**
      * 设置没有数据时的状态
      */
-    public void setStateEmptyLayout();
+    public void setLayoutState(int state);
 
+    public boolean isShowing();
+
+    /**
+     * 设置监听
+     * @param mListener
+     */
     public void setOnLayoutClickListener(View.OnClickListener mListener);
 
 
