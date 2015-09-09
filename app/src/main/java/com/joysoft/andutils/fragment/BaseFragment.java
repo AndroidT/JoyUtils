@@ -47,16 +47,19 @@ public abstract class BaseFragment extends Fragment{
     }
 
     @Override
-    public void onDestroy() {
-
-        if(cleanCache())
-            ImageLoader.clearMemory(getActivity());
+    public void onDestroyView() {
+        super.onDestroyView();
 
         ActivityPageManager.unbindReferences(getView());
 
-        super.onDestroy();
-
         recycle();
+    }
+
+    @Override
+    public void onDestroy() {
+        if(cleanCache())
+            ImageLoader.clearMemory(getActivity());
+        super.onDestroy();
     }
 
     protected boolean cleanCache(){return true;}
