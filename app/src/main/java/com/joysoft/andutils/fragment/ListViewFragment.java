@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.joysoft.andutils.R;
-import com.joysoft.andutils.adapter.BaseAbstractAdapter;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.view.EmptyLayout;
 import com.joysoft.andutils.ui.view.FooterView;

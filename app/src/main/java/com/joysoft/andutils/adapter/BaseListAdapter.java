@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * Created by fengmiao on 15/8/31.
  */
-public abstract class BaseAbstractAdapter<T> extends BaseAdapter implements IBaseAdapter<T>{
+public abstract class BaseListAdapter<T> extends BaseAdapter implements IBaseAdapter<T>{
 
     public List<T> dataList = new ArrayList<T>();
 
@@ -104,11 +104,16 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter implements IBas
 
     @Override
     public boolean isEmpty() {
-        return super.isEmpty();
+        return getCount() == 0;
     }
 
     @Override
-    public int getItemCount() {
+    public int getCount() {
+        return dataList == null ? 0 : dataList.size();
+    }
+
+    @Override
+    public int getTotalCount() {
         return getCount();
     }
 }

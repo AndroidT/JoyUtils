@@ -37,5 +37,5 @@ public interface IBaseAdapter<T> {
      *
      * @return  见getCount；
      */
-    public int getItemCount();
+    public int getTotalCount();
 }
