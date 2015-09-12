@@ -10,7 +10,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.joysoft.andutils.adapter.CommonAdapter;
+import com.joysoft.andutils.adapter.BaseAbstractAdapter;
 import com.joysoft.andutils.http.ApiResponseHandler;
 import com.joysoft.andutils.http.CommonRequest;
 import com.joysoft.andutils.http.base.ResponseState;
@@ -64,7 +64,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
     protected FooterLayout mFooterLayout;
 
-    protected CommonAdapter<?> mAdapter;
+    protected BaseAbstractAdapter<?> mAdapter;
 
     /**
      * 当前列表一页需要几条数据
@@ -76,7 +76,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
     public abstract  String getUrl();
     public abstract HashMap<String,String> getParams(int index);
-    public abstract CommonAdapter getAdapter();
+    public abstract BaseAbstractAdapter getAdapter();
 
     @Nullable
     @Override
@@ -200,14 +200,14 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         CommonRequest.with(getActivity()).postRequest(url, params, new ApiResponseHandler() {
             @Override
             public void onCompleteParse(JSONObject responseData) {
-                if(getActivity() == null)
+                if(isDetached())
                     return;
                 refreshData(responseData,index,action);
             }
 
             @Override
             public void onError(ResponseState errorType) {
-                if(getActivity() == null)
+                if(isDetached())
                     return;
                 updateState(MessageData.MESSAGE_STATE_ERROR,errorType,action);
             }

@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * Created by fengmiao on 15/8/31.
  */
-public abstract class CommonAdapter<T> extends BaseAdapter {
+public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
 
     public List<T> dataList = new ArrayList<T>();
 

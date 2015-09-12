@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.joysoft.andutils.R;
-import com.joysoft.andutils.adapter.CommonAdapter;
+import com.joysoft.andutils.adapter.BaseAbstractAdapter;
 import com.joysoft.andutils.ui.EmptyLayout;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public  abstract class BaseListFragment extends  BaseRefreshFragment{
 
 
     @Override
-    public CommonAdapter getAdapter() {
+    public BaseAbstractAdapter getAdapter() {
         return null;
     }
 
