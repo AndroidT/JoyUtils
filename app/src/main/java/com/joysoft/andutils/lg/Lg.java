@@ -11,7 +11,7 @@ import android.util.Log;
 public class Lg {
 	private static final String CLASS_METHOD_LINE_FORMAT = "%s(%d)";
 	
-	public static boolean LogEnable = false;
+	public static boolean LogEnable = true;
 
 	public static void e(String msg) {
 		if (LogEnable) {// 获取堆栈信息会影响性能，发布应用时不执行下面代码
