@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joysoft.andutils.ui.view.EmptyLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<LinearLayout
+    android:id="@+id/ll_error"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_error"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="加载出错了"
+        android:gravity="center"
+        android:id="@+id/tv_error" />
+
+</LinearLayout>
+
+    <include
+        layout="@layout/common_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+
+</com.joysoft.andutils.ui.view.EmptyLayout>

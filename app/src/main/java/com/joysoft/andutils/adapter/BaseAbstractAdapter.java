@@ -15,13 +15,14 @@ import java.util.Objects;
  *
  * Created by fengmiao on 15/8/31.
  */
-public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
+public abstract class BaseAbstractAdapter<T> extends BaseAdapter implements IBaseAdapter<T>{
 
     public List<T> dataList = new ArrayList<T>();
 
     private final Object mLock = new Object();
 
-    public  void add(T object){
+    @Override
+    public  void addData(T object){
         synchronized (mLock){
 
             if(Data.isNull(object)){
@@ -36,7 +37,7 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
 
     }
 
-
+    @Override
     public  void addDataList(List<T> mList){
         synchronized (mLock){
 
@@ -53,6 +54,7 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
 
     }
 
+    @Override
     public void addDataList(List<T> mList,int index){
         synchronized (mLock){
 
@@ -68,6 +70,7 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
         }
     }
 
+    @Override
     public  void clearDataList(){
         synchronized (mLock){
             if(dataList != null)
@@ -76,6 +79,7 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
         }
     }
 
+    @Override
     public  void removeData(int position){
         synchronized (mLock){
             if(Data.isValid(dataList))
@@ -83,11 +87,12 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
         }
     };
 
+    @Override
     public List<T> getDataList(){
         return dataList;
     };
 
-
+    @Override
     public  void recycleData(){
 
         if(dataList != null){
@@ -97,5 +102,13 @@ public abstract class BaseAbstractAdapter<T> extends BaseAdapter {
 
     };
 
+    @Override
+    public boolean isEmpty() {
+        return super.isEmpty();
+    }
 
+    @Override
+    public int getItemCount() {
+        return getCount();
+    }
 }

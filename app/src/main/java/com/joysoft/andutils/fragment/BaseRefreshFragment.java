@@ -6,17 +6,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.joysoft.andutils.adapter.BaseAbstractAdapter;
+import com.joysoft.andutils.adapter.IBaseAdapter;
 import com.joysoft.andutils.http.ApiResponseHandler;
 import com.joysoft.andutils.http.CommonRequest;
 import com.joysoft.andutils.http.base.ResponseState;
 import com.joysoft.andutils.lg.Lg;
-import com.joysoft.andutils.ui.EmptyLayout;
-import com.joysoft.andutils.ui.FooterLayout;
+import com.joysoft.andutils.ui.IEmptyLayout;
+import com.joysoft.andutils.ui.IFooterLayout;
 
 
 import org.json.JSONObject;
@@ -25,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 上下拉刷新的基类:
+ *
  * Created by fengmiao on 15/8/31.
  */
 public abstract class BaseRefreshFragment extends  BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener,
-        AbsListView.OnScrollListener{
-
+        SwipeRefreshLayout.OnRefreshListener{
     // 没有状态
     public static final int LISTVIEW_ACTION_NONE = -1;
     // 初始化时，加载缓存状态
@@ -58,13 +55,11 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
     protected  SwipeRefreshLayout mSwipeRefreshLayout;
 
-    protected ListView mListView;
+    protected IEmptyLayout mEmptyLayout;
 
-    protected EmptyLayout mEmptyLayout;
+    protected IFooterLayout mFooterLayout;
 
-    protected FooterLayout mFooterLayout;
-
-    protected BaseAbstractAdapter<?> mAdapter;
+    protected IBaseAdapter mAdapter;
 
     /**
      * 当前列表一页需要几条数据
@@ -74,26 +69,19 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
     //判断子类是否调用 super.initView
     private boolean callInitView = false;
 
+    //获取页面加载的url
     public abstract  String getUrl();
+    //获取参数
     public abstract HashMap<String,String> getParams(int index);
-    public abstract BaseAbstractAdapter getAdapter();
+
+    public abstract IBaseAdapter getAdapter();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initHeaderFooterView(inflater);
         mAdapter = getAdapter();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
-    /**
-     * 初始化footer和header
-     * @param inflater
-     */
-    protected void initHeaderFooterView(LayoutInflater inflater) {
-
-    }
-
 
     @Override
     public void initViews(View root) {
@@ -103,10 +91,11 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         callInitView = true;
 
         initConfigView(root);
+        initHeaderFooterView();
 
         if(mState == STATE_LOADED && mAdapter.isEmpty()){
             setFooterNoMoreState();
-        }else if(mState == STATE_LOADED && mAdapter.getCount() < PageSize){
+        }else if(mState == STATE_LOADED && mAdapter.getItemCount() < PageSize){
             setFooterFullState();
         }
 
@@ -118,12 +107,19 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
     /**
      * 初始化和配置 一系列的view
-     *      SwipeRefreshView
-     *      mEmptyLayout
-     *      mListView
+     *   <br>   SwipeRefreshView
+     *    <br>  mEmptyLayout
+     *    <br>  mListView
      *
      */
     protected void initConfigView(View root) {
+
+    }
+
+    /**
+     * 初始化footer和header
+     */
+    protected void initHeaderFooterView() {
 
     }
 
@@ -132,15 +128,13 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         if(mState == STATE_LOADING)
             return;
 
-        mListView.setSelection(0);
-
         setSwipeRefreshLoadingState();
     }
 
     /**
      * 加载指定某一页的数据
-     * @param page
-     * @param action
+     * @param page  要加载第几页的数据
+     * @param action   mListViewAction
      */
     protected  void loadList(int page,int action){
         mListViewAction = action;
@@ -152,7 +146,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * 加载下一页数据
      */
     protected void onLoadNextPage(){
-        int pageIndex = mAdapter.getCount() / PageSize + 1;
+        int pageIndex = mAdapter.getItemCount() / PageSize + 1;
         getData(pageIndex, LISTVIEW_ACTION_SCROLL);
     }
 
@@ -186,7 +180,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
                 return;
             }
 
-            StringBuffer paramsStr = new StringBuffer();
+            StringBuilder paramsStr = new StringBuilder();
             paramsStr.append("?");
             for(String key : params.keySet()){
                 paramsStr.append(key)
@@ -216,10 +210,10 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
     }
 
     /**
-     * 刷新数据
-     * @param result
-     * @param index
-     * @param action
+     * 刷新数据 更新Adapter
+     * @param result  返回的数据结果
+     * @param index    当前页数
+     * @param action    ListViewAction
      */
     void refreshData(Object result,int index,int action){
 
@@ -229,7 +223,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         //判断当前数据加载状态
         if(content == null || content.size() == 0){
-            if (mAdapter.getCount() == 0)
+            if (mAdapter.getItemCount() == 0)
                 mMessageState = MessageData.MESSAGE_STATE_EMPTY;
             else
                 mMessageState = MessageData.MESSAGE_STATE_FULL;
@@ -289,14 +283,14 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         //加载数据失败时
         if(mMessageState == MessageData.MESSAGE_STATE_ERROR){
 
-            if(mAdapter.getCount() == 0 && mEmptyLayout != null){
+            if(mAdapter.getItemCount() == 0 && mEmptyLayout != null){
 
                 if(errorType == ResponseState.ERROR_DATA_NULL)
-                    mEmptyLayout.setLayoutState(EmptyLayout.STATE_ERROR_DATA_NULL);
+                    mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_NULL);
                 else if(errorType == ResponseState.ERROR_DATA_PARSE)
-                    mEmptyLayout.setLayoutState(EmptyLayout.STATE_ERROR_DATA_PARSE);
+                    mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_PARSE);
                 if(errorType == ResponseState.ERROR_NETWORK)
-                    mEmptyLayout.setLayoutState(EmptyLayout.STATE_ERROR_NET);
+                    mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_NET);
 
                 mEmptyLayout.showEmptyLayout();
                 return;
@@ -306,8 +300,8 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         //加载的数据为空
         if(mMessageState == MessageData.MESSAGE_STATE_EMPTY){
-            if(mAdapter.getCount() == 0 && mEmptyLayout != null){
-                mEmptyLayout.setLayoutState(EmptyLayout.STATE_ERROR_DATA_NULL);
+            if(mAdapter.getItemCount() == 0 && mEmptyLayout != null){
+                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_NULL);
                 mEmptyLayout.showEmptyLayout();
                 return;
             }else{
@@ -328,11 +322,19 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
             setFooterHasMoreState();
     }
 
+    /**
+     * listView滚动到底部时调用该方法加载数据
+     *
+     * <br>eg: 以ListView为例
+     *  <li>
+     *     在BaseListFragment中实现OnScrollListener监听，
+     *     在onScrollStateChanged中判断是否滚动到底部自动加载数据
+     *      如果要实现预加载数据可以重写onScrollStateChanged方法
+     *  </li>
+     */
+    protected void onScrollLoad() {
 
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-
-        if(mAdapter  == null || mAdapter.getCount() == 0)
+        if(mAdapter  == null || mAdapter.getItemCount() == 0)
             return;
 
         // footer 没有设置或 是隐藏状态 则直接返回
@@ -352,24 +354,8 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         }
 
 
-        //判断是否滚动到底部
-        boolean scrollEnd = false;
 
-        try{
-            if(absListView.getPositionForView(mFooterLayout.getFooterView())
-                    == absListView.getLastVisiblePosition())
-                scrollEnd = true;
-        }catch (Exception e){
-                scrollEnd = false;
-        }
-
-        if(scrollEnd)
             onLoadNextPage();
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
     }
 
     public void setPageSize(int pageSize){
@@ -409,7 +395,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         if (action == LISTVIEW_ACTION_REFRESH) {
             setSwipeRefreshLoadingState();
             if(mEmptyLayout != null && mEmptyLayout.isShowing()){
-                mEmptyLayout.setLayoutState(EmptyLayout.STATE_LOADING);
+                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_LOADING);
             }
         } else if (action == LISTVIEW_ACTION_SCROLL) {
             setFooterLoadingState();
@@ -431,13 +417,13 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     void setFooterFullState(){
         if(mFooterLayout != null){
-            mFooterLayout.setLayoutState(FooterLayout.STATE_COMPLETE);
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_COMPLETE);
         }
     }
 
     void setFooterLoadingState(){
         if(mFooterLayout != null)
-            mFooterLayout.setLayoutState(FooterLayout.STATE_LOADING);
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_LOADING);
     }
 
     /**
@@ -445,7 +431,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     void setFooterNoMoreState(){
         if(mFooterLayout != null)
-            mFooterLayout.setLayoutState(FooterLayout.STATE_ERROR_DATA_NULL);
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_ERROR_DATA_NULL);
     }
 
     /**
@@ -453,7 +439,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     void setFooterHasMoreState(){
         if(mFooterLayout != null)
-            mFooterLayout.setLayoutState(FooterLayout.STATE_MORE);
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_MORE);
     }
 
     /**
@@ -461,6 +447,6 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     void setFooterErrorState(){
         if(mFooterLayout != null)
-            mFooterLayout.setLayoutState(FooterLayout.STATE_ERROR_DATA_PARSE);
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_ERROR_DATA_PARSE);
     }
 }

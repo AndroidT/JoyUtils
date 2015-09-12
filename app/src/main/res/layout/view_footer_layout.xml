@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joysoft.andutils.ui.view.FooterView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/commom_footview"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
+
+    <include
+        android:id="@+id/listview_foot_progress"
+        layout="@layout/common_progressbar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/common_foot_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/load_ing" />
+
+
+</com.joysoft.andutils.ui.view.FooterView>

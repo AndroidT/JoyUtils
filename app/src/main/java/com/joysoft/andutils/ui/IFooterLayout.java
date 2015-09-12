@@ -5,7 +5,7 @@ import android.view.View;
 /**
  * Created by fengmiao on 15/8/31.
  */
-public interface FooterLayout {
+public interface IFooterLayout {
 
     /**
      * 显示 “加载更多” 时的状态
@@ -39,9 +39,9 @@ public interface FooterLayout {
     /**
      * 设置当前View的状态值
      * 这个方法内只更新View的数据，不操作是否visible
-     * @param State
+     * @param state
      */
-    public void setLayoutState(int State);
+    public void setLayoutState(int state);
 
 
     /**
@@ -64,5 +64,12 @@ public interface FooterLayout {
      * 返回当前底部视图
      * @return
      */
-    public  View getFooterView();
+    public  View getView();
+
+    /**
+     * 设置监听
+     * @param mListener
+     */
+    public void setOnLayoutClickListener(View.OnClickListener mListener);
+
 }

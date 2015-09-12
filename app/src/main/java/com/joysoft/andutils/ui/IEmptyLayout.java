@@ -7,7 +7,7 @@ import android.view.View;
  *
  * Created by fengmiao on 15/8/31.
  */
-public interface EmptyLayout {
+public interface IEmptyLayout {
 
     /**
      * 网络错误

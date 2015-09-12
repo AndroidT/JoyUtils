@@ -3,19 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <include
-        layout="@layout/common_progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
 
     <com.joysoft.andutils.ui.view.MySwipeRefreshLayout
+        android:id="@+id/fragment_listrefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
         <com.joysoft.andutils.ui.view.CustomListView
+            android:id="@+id/fragment_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
@@ -25,6 +21,13 @@
             android:scrollingCache="false"/>
 
     </com.joysoft.andutils.ui.view.MySwipeRefreshLayout>
+
+    <com.joysoft.andutils.ui.view.EmptyLayout
+        android:id="@+id/fragement_emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.joysoft.andutils.ui.view.EmptyLayout>
 
     
 
