@@ -1,13 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <include
-        layout="@layout/fragment_base_listrefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
+>
 </RelativeLayout>

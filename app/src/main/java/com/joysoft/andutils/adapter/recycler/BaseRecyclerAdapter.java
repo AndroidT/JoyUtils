@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.joysoft.andutils.adapter.IBaseAdapter;
-import com.joysoft.andutils.common.Data;
 import com.joysoft.andutils.lg.Lg;
 
 import java.util.ArrayList;
@@ -37,11 +36,11 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     public  void addData(T object){
         synchronized (mLock){
 
-            if(Data.isNull(object)){
+            if(object == null){
                 Lg.d("---- 插入一条空数据  --- return");
                 return;
             }
-            if(Data.isValid(dataList))
+            if(dataList != null)
                 dataList.add(object);
 
             notifyDataSetChanged();
@@ -53,7 +52,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     public  void addDataList(List<T> mList){
         synchronized (mLock){
 
-            if(Data.isValid(mList) && Data.isValid(dataList)){
+            if(mList != null){
                 dataList.addAll(mList);
             }
             else{
@@ -70,7 +69,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     public void addDataList(List<T> mList,int index){
         synchronized (mLock){
 
-            if(Data.isValid(mList) && Data.isValid(dataList)){
+            if(mList != null){
                 dataList.addAll(index,mList);
             }
             else{
@@ -80,6 +79,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
 
             notifyDataSetChanged();
         }
+
     }
 
     @Override
@@ -94,7 +94,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     @Override
     public  void removeData(int position){
         synchronized (mLock){
-            if(Data.isValid(dataList))
+            if(dataList != null)
                 dataList.remove(position);
         }
     };

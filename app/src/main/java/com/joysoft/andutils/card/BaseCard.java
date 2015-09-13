@@ -21,6 +21,16 @@ public abstract  class BaseCard<T> extends RecyclerView.ViewHolder{
     public abstract void onCreateView(ViewGroup viewGroup);
 
 
+
+    public void onViewAttacthedToWindow(){};
+
     public abstract  void onBindData(T data,int position);
+
+    public void onDetachedFromWidow(){};
+
+    public abstract void onViewRecycled();
+
+
+
 
 }

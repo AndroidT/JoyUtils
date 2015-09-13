@@ -10,21 +10,29 @@ import org.json.JSONObject;
  *
  * Created by fengmiao on 15/9/7.
  */
-public abstract class ApiResponseHandler extends ResponseHandler<JSONObject,JSONObject> {
+public abstract class ApiResponseHandler extends ResponseHandler<Object,JSONObject> {
 
     int resultCode;
 
     @Override
     public void setResultData(JSONObject jsonObject) {
         try{
+
+            if(jsonObject == null){
+                onError(ResponseState.ERROR_DATA_NULL);
+                return;
+            }
+
            resultCode = Integer.parseInt(jsonObject.getString("status"));
 
-            JSONObject content = (JSONObject)jsonObject.get("rows");
+            Object content = jsonObject.get("rows");
 
-            if(content == null){
+            if(!isOk() || content == null){
                 onError((isOk() && content == null) ? ResponseState.ERROR_DATA_NULL : ResponseState.ERROR_DATA_PARSE);
-            }else
-                onCompleteParse(content);
+                return;
+            }
+
+            onCompleteParse(content);
 
         }catch (Exception e){
             Lg.e(e.toString());

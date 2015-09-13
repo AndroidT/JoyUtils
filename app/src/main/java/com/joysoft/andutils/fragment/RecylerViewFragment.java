@@ -22,9 +22,6 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
 
     public RecyclerView mRecyclerView;
 
-
-    public abstract RecyclerView.LayoutManager getLayoutManager();
-
     @Override
     protected void initConfigView(View root) {
         super.initConfigView(root);
@@ -54,5 +51,7 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
         });
     }
 
+
+    public abstract RecyclerView.LayoutManager getLayoutManager();
 
 }

@@ -1,8 +1,5 @@
 package com.joysoft.andutils.adapter;
 
-import com.joysoft.andutils.common.Data;
-import com.joysoft.andutils.lg.Lg;
-
 import java.util.List;
 
 /**

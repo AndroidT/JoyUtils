@@ -29,6 +29,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
 
     public EmptyLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     @Override
@@ -50,7 +51,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
      */
     @Override
     public void showEmptyLayout() {
-        setVisibility(INVISIBLE);
+        setVisibility(VISIBLE);
     }
 
     /**

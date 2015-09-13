@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 上下拉刷新的基类:
@@ -95,7 +96,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         if(mState == STATE_LOADED && mAdapter.isEmpty()){
             setFooterNoMoreState();
-        }else if(mState == STATE_LOADED && mAdapter.getItemCount() < PageSize){
+        }else if(mState == STATE_LOADED && mAdapter.getTotalCount() < PageSize){
             setFooterFullState();
         }
 
@@ -128,6 +129,8 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         if(mState == STATE_LOADING)
             return;
 
+        loadList(1,LISTVIEW_ACTION_REFRESH);
+
         setSwipeRefreshLoadingState();
     }
 
@@ -146,7 +149,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * 加载下一页数据
      */
     protected void onLoadNextPage(){
-        int pageIndex = mAdapter.getItemCount() / PageSize + 1;
+        int pageIndex = mAdapter.getTotalCount() / PageSize + 1;
         getData(pageIndex, LISTVIEW_ACTION_SCROLL);
     }
 
@@ -193,7 +196,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         CommonRequest.with(getActivity()).postRequest(url, params, new ApiResponseHandler() {
             @Override
-            public void onCompleteParse(JSONObject responseData) {
+            public void onCompleteParse(Object responseData) {
                 if(isDetached())
                     return;
                 refreshData(responseData,index,action);
@@ -223,7 +226,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         //判断当前数据加载状态
         if(content == null || content.size() == 0){
-            if (mAdapter.getItemCount() == 0)
+            if (mAdapter.getTotalCount() == 0)
                 mMessageState = MessageData.MESSAGE_STATE_EMPTY;
             else
                 mMessageState = MessageData.MESSAGE_STATE_FULL;
@@ -261,7 +264,8 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * @param errorType
      * @param action
      */
-    void updateState(MessageData messageData,ResponseState errorType,int action){
+    void updateState(MessageData messageData,ResponseState errorType,int
+action){
         mMessageState = messageData;
 
         // 加载结束
@@ -283,7 +287,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         //加载数据失败时
         if(mMessageState == MessageData.MESSAGE_STATE_ERROR){
 
-            if(mAdapter.getItemCount() == 0 && mEmptyLayout != null){
+            if(mAdapter.getTotalCount() == 0 && mEmptyLayout != null){
 
                 if(errorType == ResponseState.ERROR_DATA_NULL)
                     mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_NULL);
@@ -300,7 +304,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         //加载的数据为空
         if(mMessageState == MessageData.MESSAGE_STATE_EMPTY){
-            if(mAdapter.getItemCount() == 0 && mEmptyLayout != null){
+            if(mAdapter.getTotalCount() == 0 && mEmptyLayout != null){
                 mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_NULL);
                 mEmptyLayout.showEmptyLayout();
                 return;
@@ -334,7 +338,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     protected void onScrollLoad() {
 
-        if(mAdapter  == null || mAdapter.getItemCount() == 0)
+        if(mAdapter  == null || mAdapter.getTotalCount() == 0)
             return;
 
         // footer 没有设置或 是隐藏状态 则直接返回

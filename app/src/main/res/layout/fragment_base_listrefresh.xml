@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_recylerview"
+        <com.joysoft.andutils.ui.view.CustomListView
+            android:id="@+id/fragment_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
@@ -29,6 +29,6 @@
         android:layout_height="match_parent">
     </include>
 
-    
+
 
 </FrameLayout>

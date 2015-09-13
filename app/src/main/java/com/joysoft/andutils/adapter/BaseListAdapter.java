@@ -1,15 +1,10 @@
 package com.joysoft.andutils.adapter;
 
-import android.database.DataSetObserver;
 import android.widget.BaseAdapter;
-
-import com.joysoft.andutils.common.Data;
 import com.joysoft.andutils.lg.Lg;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  *
@@ -25,11 +20,11 @@ public abstract class BaseListAdapter<T> extends BaseAdapter implements IBaseAda
     public  void addData(T object){
         synchronized (mLock){
 
-            if(Data.isNull(object)){
+            if(object == null){
                 Lg.d("---- 插入一条空数据  --- return");
                 return;
             }
-            if(Data.isValid(dataList))
+            if(dataList != null)
                 dataList.add(object);
 
             notifyDataSetChanged();
@@ -41,7 +36,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter implements IBaseAda
     public  void addDataList(List<T> mList){
         synchronized (mLock){
 
-            if(Data.isValid(mList) && Data.isValid(dataList)){
+            if(mList != null){
                 dataList.addAll(mList);
             }
             else{
@@ -58,7 +53,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter implements IBaseAda
     public void addDataList(List<T> mList,int index){
         synchronized (mLock){
 
-            if(Data.isValid(mList) && Data.isValid(dataList)){
+            if(mList != null){
                     dataList.addAll(index,mList);
             }
             else{
@@ -82,7 +77,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter implements IBaseAda
     @Override
     public  void removeData(int position){
         synchronized (mLock){
-            if(Data.isValid(dataList))
+            if(dataList != null)
                 dataList.remove(position);
         }
     };

@@ -65,7 +65,7 @@ public abstract class BaseFragment extends Fragment{
     protected boolean cleanCache(){return true;}
 
     protected boolean attachToRoot(){
-        return true;
+        return false;
     }
 }
 

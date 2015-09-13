@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.joysoft.andutils.http.base.BaseRequest;
 import com.joysoft.andutils.http.base.JsonMapRequest;
 import com.joysoft.andutils.http.base.ResponseHandler;
+import com.joysoft.andutils.http.base.ResponseState;
 import com.joysoft.andutils.http.base.VolleyUtils;
 
 import org.json.JSONObject;
@@ -101,15 +102,13 @@ public class CommonRequest implements BaseRequest<HashMap<String,String>,String>
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if(responseHandler != null){
-                            responseHandler.setResultData(response);
-                        }
+                        responseHandler.setResultData(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        responseHandler.onError(ResponseState.ERROR_NETWORK);
                     }
                 }
         ){

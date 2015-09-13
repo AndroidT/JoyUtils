@@ -13,6 +13,8 @@ import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.view.EmptyLayout;
 import com.joysoft.andutils.ui.view.FooterView;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
