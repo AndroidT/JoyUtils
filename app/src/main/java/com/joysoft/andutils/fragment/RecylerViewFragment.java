@@ -3,6 +3,7 @@ package com.joysoft.andutils.fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -11,6 +12,7 @@ import com.joysoft.andutils.R;
 import com.joysoft.andutils.adapter.IBaseAdapter;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.view.EmptyLayout;
+import com.joysoft.andutils.ui.view.FooterView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +35,43 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
                 R.color.swiperefresh_color1, R.color.swiperefresh_color2,
                 R.color.swiperefresh_color3, R.color.swiperefresh_color4);
 
-
         //RecyclerView
         mRecyclerView = (RecyclerView)root.findViewById(R.id.fragment_recylerview);
         mRecyclerView.setLayoutManager(getLayoutManager());
-        mRecyclerView.setAdapter((RecyclerView.Adapter)mAdapter);
+        mRecyclerView.setAdapter((RecyclerView.Adapter) mAdapter);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            /**
+             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
+             * called after the scroll has completed.
+             * <p>
+             * This callback will also be called if visible item range changes after a layout
+             * calculation. In that case, dx and dy will be 0.
+             *
+             * @param recyclerView The RecyclerView which scrolled.
+             * @param dx           The amount of horizontal scroll.
+             * @param dy           The amount of vertical scroll.
+             */
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(mFooterLayout == null)
+                    return;
+
+                //判断是否滚动到底部
+                boolean scrollEnd = false;
+                try{
+                    if(recyclerView.getChildLayoutPosition(mFooterLayout.getView()) == recyclerView.getChildCount())
+                        scrollEnd = true;
+                }catch (Exception e){
+                    scrollEnd = false;
+                }
+
+                if(scrollEnd)
+                    onScrollLoad();
+            }
+        });
 
         //EmptyView
         mEmptyLayout = (EmptyLayout)root.findViewById(R.id.fragement_emptyLayout);
@@ -51,6 +85,24 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
         });
     }
 
+
+    @Override
+    protected void initHeaderFooterView() {
+        super.initHeaderFooterView();
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_footer_layout,null);
+
+        mFooterLayout = (FooterView)view.findViewById(R.id.commom_footview);
+
+        mFooterLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mState != STATE_LOADING){
+                    onLoadNextPage();
+                }
+            }
+        });
+        mRecyclerView.getLayoutManager().
+    }
 
     public abstract RecyclerView.LayoutManager getLayoutManager();
 

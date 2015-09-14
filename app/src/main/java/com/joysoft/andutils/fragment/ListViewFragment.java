@@ -86,6 +86,10 @@ public abstract class ListViewFragment extends  BaseRefreshFragment implements
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
+
+        if(mFooterLayout == null)
+            return;
+
         //判断是否滚动到底部
         boolean scrollEnd = false;
         try{
