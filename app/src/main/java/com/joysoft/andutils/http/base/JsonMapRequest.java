@@ -8,11 +8,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.*;
 import com.android.volley.Response.Listener;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonRequest;
 import com.joysoft.andutils.lg.Lg;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;

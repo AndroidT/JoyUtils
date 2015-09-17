@@ -1,21 +1,14 @@
 package com.joysoft.andutils.fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 
 import com.joysoft.andutils.R;
-import com.joysoft.andutils.adapter.IBaseAdapter;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.view.EmptyLayout;
 import com.joysoft.andutils.ui.view.FooterView;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by fengmiao on 15/9/12.
@@ -101,7 +94,7 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
                 }
             }
         });
-        mRecyclerView.getLayoutManager().
+//        mRecyclerView.getLayoutManager().
     }
 
     public abstract RecyclerView.LayoutManager getLayoutManager();

@@ -1,11 +1,5 @@
 package com.joysoft.andutils.common;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -18,7 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -27,7 +20,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.provider.MediaStore.Images;
@@ -36,6 +28,12 @@ import android.view.Gravity;
 
 import com.joysoft.andutils.app.DeviceUtils;
 import com.joysoft.andutils.lg.Lg;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Bitmap工具类

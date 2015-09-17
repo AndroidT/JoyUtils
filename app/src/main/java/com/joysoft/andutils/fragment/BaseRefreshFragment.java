@@ -15,12 +15,8 @@ import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.IFooterLayout;
 
-
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 上下拉刷新的基类:

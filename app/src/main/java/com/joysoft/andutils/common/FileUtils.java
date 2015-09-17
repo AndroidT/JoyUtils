@@ -1,15 +1,14 @@
 package com.joysoft.andutils.common;
 
+import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
-
-import android.os.Environment;
-import android.text.TextUtils;
-import android.webkit.MimeTypeMap;
 
 
 /**

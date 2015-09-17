@@ -1,7 +1,7 @@
 package com.joysoft.andutils;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.joysoft.andutils.test.TestRecycleViewFragment;
 

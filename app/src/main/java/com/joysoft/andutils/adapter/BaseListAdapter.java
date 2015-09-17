@@ -1,6 +1,7 @@
 package com.joysoft.andutils.adapter;
 
 import android.widget.BaseAdapter;
+
 import com.joysoft.andutils.lg.Lg;
 
 import java.util.ArrayList;

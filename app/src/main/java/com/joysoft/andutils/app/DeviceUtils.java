@@ -1,9 +1,5 @@
 package com.joysoft.andutils.app;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.lang.reflect.Field;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
@@ -24,6 +20,10 @@ import android.view.WindowManager;
 
 import com.joysoft.andutils.common.BitmapUtils;
 import com.joysoft.andutils.lg.Lg;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.lang.reflect.Field;
 
 /**
  * 硬件工具类

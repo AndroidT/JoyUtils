@@ -1,36 +1,28 @@
 package com.joysoft.andutils.app;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.ProviderInfo;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Looper;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 
 import com.joysoft.andutils.lg.Lg;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 系统及硬件常用工具
