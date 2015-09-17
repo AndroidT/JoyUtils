@@ -26,13 +26,20 @@ public class TestRecylcerAdapter extends BaseRecyclerAdapter<JSONObject>{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        super.onBindViewHolder(viewHolder, i);
-        ((ViewHolder)viewHolder).mTextView.setText("位置是:"+i);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        super.onBindViewHolder(viewHolder, position);
+        if(!isFooter(position))
+          ((ViewHolder)viewHolder).mTextView.setText("位置是:"+position);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
+//        super.onCreateViewHolder(viewGroup,type);
+
+
+        if(type == TYPE_FOOTER)
+            return  super.onCreateViewHolder(viewGroup,type);
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.test_my_text_view,null);
         return new ViewHolder(v);
     }

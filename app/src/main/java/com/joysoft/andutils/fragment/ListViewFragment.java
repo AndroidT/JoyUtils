@@ -29,6 +29,22 @@ public abstract class ListViewFragment extends  BaseRefreshFragment implements
     protected void initConfigView(View root) {
         super.initConfigView(root);
 
+        //EmptyView
+        mEmptyLayout = (EmptyLayout)root.findViewById(R.id.fragement_emptyLayout);
+        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mState == STATE_LOADING)
+                    return;
+
+                mState = STATE_LOADING;
+                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_LOADING);
+                loadList(1, LISTVIEW_ACTION_REFRESH);
+            }
+        });
+
+
         //SwipeRefreshLayout
         mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.fragment_listrefreshlayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -42,18 +58,6 @@ public abstract class ListViewFragment extends  BaseRefreshFragment implements
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
         mListView.setAdapter((BaseAdapter) mAdapter);
-
-        //EmptyView
-        mEmptyLayout = (EmptyLayout)root.findViewById(R.id.fragement_emptyLayout);
-        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mState = STATE_LOADING;
-                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_LOADING);
-                loadList(1, LISTVIEW_ACTION_REFRESH);
-            }
-        });
-
 
     }
 

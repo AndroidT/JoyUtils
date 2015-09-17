@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.joysoft.andutils.R;
+import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IEmptyLayout;
 
 /**
@@ -21,13 +22,14 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
     ContentLoadingProgressBar progressBar;
     LinearLayout linearLayout;
 
+    OnClickListener mListener;
+
     public EmptyLayout(Context context){
         this(context, null);
     }
 
     public EmptyLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
     @Override
@@ -37,11 +39,18 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
     }
 
     private void init(){
+
+        int childCount = getChildCount();
+
+        Lg.e("childCount :  " + childCount);
+
         linearLayout = (LinearLayout)findViewById(R.id.ll_error);
         imageView = (ImageView)findViewById(R.id.img_error);
         textView = (TextView)findViewById(R.id.tv_error);
         progressBar = (ContentLoadingProgressBar)findViewById(R.id.common_progressbar);
         imageView.setImageResource(R.drawable.default_empty_img);
+
+        imageView.setOnClickListener(mListener);
     }
 
     /**
@@ -66,29 +75,39 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
      * @param state
      */
     @Override
-    public void setLayoutState(int state) {
+    public void setLayoutState(final int state) {
 
-        //加载中...
-        if(STATE_LOADING == state){
-            linearLayout.setVisibility(GONE);
-            progressBar.show();
-            return;
-        }
+       this.post(new Runnable() {
+           @Override
+           public void run() {
+               if(getContext() == null || linearLayout == null)
+                   return;
 
-        if(STATE_ERROR_NET == state){
-            textView.setText(R.string.load_error_Net);
-        }
+               //加载中...
+               if(STATE_LOADING == state){
+                   linearLayout.setVisibility(GONE);
+                   progressBar.show();
+                   return;
+               }
 
-        if(STATE_ERROR_DATA_NULL == state){
-            textView.setText(R.string.load_empty);
-        }
+               if(STATE_ERROR_NET == state){
+                   textView.setText(R.string.load_error_Net);
+               }
 
-        if(STATE_ERROR_DATA_PARSE == state){
-            textView.setText(R.string.load_error);
-        }
+               if(STATE_ERROR_DATA_NULL == state){
+                   textView.setText(R.string.load_empty);
+               }
 
-        progressBar.hide();
-        linearLayout.setVisibility(VISIBLE);
+               if(STATE_ERROR_DATA_PARSE == state){
+                   textView.setText(R.string.load_error);
+               }
+
+               progressBar.hide();
+               linearLayout.setVisibility(VISIBLE);
+
+
+           }
+       });
 
 
     }
@@ -107,7 +126,8 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
      */
     @Override
     public void setOnLayoutClickListener(OnClickListener mListener) {
-            if(imageView != null)
-                imageView.setOnClickListener(mListener);
+        this.mListener = mListener;
+        if(imageView != null)
+            imageView.setOnClickListener(mListener);
     }
 }

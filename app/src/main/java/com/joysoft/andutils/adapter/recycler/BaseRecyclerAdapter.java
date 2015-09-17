@@ -1,6 +1,7 @@
 package com.joysoft.andutils.adapter.recycler;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.joysoft.andutils.adapter.IBaseAdapter;
@@ -17,8 +18,16 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     public List<T> dataList = new ArrayList<T>();
     private final Object mLock = new Object();
 
+    private View footerView;
+
+    protected final  int TYPE_FOOTER  = 8888;
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
+
+        if(type == TYPE_FOOTER)
+            return new HeaderFooterViewHodler(footerView);
+
         return null;
     }
 
@@ -27,8 +36,30 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
 
     }
 
+    public void addFooter(View footerView){
+        this.footerView = footerView;
+        notifyDataSetChanged();
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if(isFooter(position))
+            return TYPE_FOOTER;
+
+        return super.getItemViewType(position);
+    }
+
+    protected boolean isFooter(int position){
+        return position >= dataList.size();
+    }
+
     @Override
     public int getItemCount() {
+//        return dataList == null ? 0 : dataList.size();
+        if(footerView != null)
+            return dataList == null ? 1 : dataList.size() + 1;
+
         return dataList == null ? 0 : dataList.size();
     }
 
@@ -122,6 +153,17 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
     @Override
     public int getTotalCount() {
         return getItemCount();
+    }
+
+}
+
+class HeaderFooterViewHodler extends  RecyclerView.ViewHolder{
+
+    View itemView;
+
+    public HeaderFooterViewHodler(View itemView){
+        super(itemView);
+        this.itemView = itemView;
     }
 
 }

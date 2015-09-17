@@ -296,6 +296,8 @@ action){
                 return;
             }
 
+            mFooterLayout.setLayoutState(IFooterLayout.STATE_ERROR_DATA_PARSE);
+
         }
 
         //加载的数据为空

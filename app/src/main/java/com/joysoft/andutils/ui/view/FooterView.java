@@ -19,12 +19,13 @@ public class FooterView extends LinearLayout implements IFooterLayout{
     TextView textView;
 
     public FooterView(Context context){
-        this(context,null);
+        this(context, null);
     }
 
     public FooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
 
     @Override
     protected void onAttachedToWindow() {
@@ -44,32 +45,41 @@ public class FooterView extends LinearLayout implements IFooterLayout{
      * @param state
      */
     @Override
-    public void setLayoutState(int state) {
+    public void setLayoutState(final int state) {
 
-        int textRes = R.string.load_more;
+       this.post(new Runnable() {
+           @Override
+           public void run() {
+               if(getContext() == null || progressBar == null)
+                   return;
 
-        if(STATE_LOADING == state){
-            progressBar.show();
-            textRes = R.string.load_ing;
-        }
+               int textRes = R.string.load_more;
 
-        if(STATE_ERROR_DATA_NULL == state){
-            textRes = R.string.load_empty;
-        }
+               if(STATE_LOADING == state){
+                   progressBar.show();
+                   textRes = R.string.load_ing;
+                   return;
+               }
 
-        if(STATE_COMPLETE == state){
-            textRes = R.string.load_full;
-        }
+               if(STATE_ERROR_DATA_NULL == state){
+                   textRes = R.string.load_empty;
+               }
 
-        if(STATE_ERROR_DATA_PARSE == state)
-            textRes = R.string.load_error;
+               if(STATE_COMPLETE == state){
+                   textRes = R.string.load_full;
+               }
 
-        if(STATE_MORE == state){
-            textRes = R.string.load_more;
-        }
+               if(STATE_ERROR_DATA_PARSE == state)
+                   textRes = R.string.load_error;
 
-        progressBar.hide();
-        textView.setText(textRes);
+               if(STATE_MORE == state){
+                   textRes = R.string.load_more;
+               }
+
+               progressBar.hide();
+               textView.setText(textRes);
+           }
+       });
 
     }
 

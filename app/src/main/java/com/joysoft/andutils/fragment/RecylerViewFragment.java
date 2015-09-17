@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.joysoft.andutils.R;
+import com.joysoft.andutils.adapter.recycler.BaseRecyclerAdapter;
+import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.view.EmptyLayout;
 import com.joysoft.andutils.ui.view.FooterView;
@@ -20,6 +22,22 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
     @Override
     protected void initConfigView(View root) {
         super.initConfigView(root);
+
+        //EmptyView
+        mEmptyLayout = (EmptyLayout)root.findViewById(R.id.fragement_emptyLayout);
+        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mState == STATE_LOADING)
+                    return;
+
+                mState = STATE_LOADING;
+                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_LOADING);
+                loadList(1, LISTVIEW_ACTION_REFRESH);
+
+            }
+        });
 
         //SwipeRefreshLayout
         mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.fragment_listrefreshlayout);
@@ -49,33 +67,23 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(mFooterLayout == null)
+                if (mFooterLayout == null)
                     return;
 
                 //判断是否滚动到底部
                 boolean scrollEnd = false;
-                try{
-                    if(recyclerView.getChildLayoutPosition(mFooterLayout.getView()) == recyclerView.getChildCount())
+                try {
+                    if (recyclerView.getChildLayoutPosition(mFooterLayout.getView()) == recyclerView.getChildCount())
                         scrollEnd = true;
-                }catch (Exception e){
+                } catch (Exception e) {
                     scrollEnd = false;
                 }
 
-                if(scrollEnd)
+                if (scrollEnd)
                     onScrollLoad();
             }
         });
 
-        //EmptyView
-        mEmptyLayout = (EmptyLayout)root.findViewById(R.id.fragement_emptyLayout);
-        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mState = STATE_LOADING;
-                mEmptyLayout.setLayoutState(IEmptyLayout.STATE_LOADING);
-                loadList(1, LISTVIEW_ACTION_REFRESH);
-            }
-        });
     }
 
 
@@ -94,6 +102,8 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
                 }
             }
         });
+
+        ((BaseRecyclerAdapter)mAdapter).addFooter(view);
 //        mRecyclerView.getLayoutManager().
     }
 
