@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by fengmiao on 15/9/12.
  */
-public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBaseAdapter<T> {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBaseAdapter<T> {
 
     public List<T> dataList = new ArrayList<T>();
     private final Object mLock = new Object();
@@ -28,13 +28,31 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBas
         if(type == TYPE_FOOTER)
             return new HeaderFooterViewHodler(footerView);
 
-        return null;
+        return onCreateHolder(viewGroup,type);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        if(isFooter(position))
+            return;
+        onBindData(viewHolder,position);
     }
+
+    /**
+     * 获取一个新的ViewHolder
+     * @param viewGroup
+     * @param type
+     * @return
+     */
+    public abstract RecyclerView.ViewHolder onCreateHolder(ViewGroup viewGroup,int type);
+
+    /**
+     * 绑定数据
+     * @param viewHolder
+     * @param position
+     */
+    public abstract void onBindData(RecyclerView.ViewHolder viewHolder,int position);
+
 
     public void addFooter(View footerView){
         this.footerView = footerView;

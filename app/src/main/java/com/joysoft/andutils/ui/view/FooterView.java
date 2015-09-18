@@ -5,6 +5,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.joysoft.andutils.R;
@@ -15,7 +16,7 @@ import com.joysoft.andutils.ui.IFooterLayout;
  */
 public class FooterView extends LinearLayout implements IFooterLayout{
 
-    ContentLoadingProgressBar progressBar;
+    ProgressBar progressBar;
     TextView textView;
 
     public FooterView(Context context){
@@ -34,7 +35,7 @@ public class FooterView extends LinearLayout implements IFooterLayout{
     }
 
     void init(){
-        progressBar = (ContentLoadingProgressBar)findViewById(R.id.listview_foot_progress);
+        progressBar = (ProgressBar)findViewById(R.id.listview_foot_progress);
         textView = (TextView)findViewById(R.id.common_foot_more);
     }
 
@@ -56,8 +57,9 @@ public class FooterView extends LinearLayout implements IFooterLayout{
                int textRes = R.string.load_more;
 
                if(STATE_LOADING == state){
-                   progressBar.show();
+                   progressBar.setVisibility(View.VISIBLE);
                    textRes = R.string.load_ing;
+                   textView.setText(textRes);
                    return;
                }
 
@@ -76,7 +78,7 @@ public class FooterView extends LinearLayout implements IFooterLayout{
                    textRes = R.string.load_more;
                }
 
-               progressBar.hide();
+               progressBar.setVisibility(View.GONE);
                textView.setText(textRes);
            }
        });

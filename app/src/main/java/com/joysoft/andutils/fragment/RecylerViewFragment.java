@@ -73,7 +73,10 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
                 //判断是否滚动到底部
                 boolean scrollEnd = false;
                 try {
-                    if (recyclerView.getChildLayoutPosition(mFooterLayout.getView()) == recyclerView.getChildCount())
+                    int childLayoutPosition = recyclerView.getChildLayoutPosition(mFooterLayout.getView());
+                    int dataSize = mAdapter.getTotalCount();
+
+                    if (childLayoutPosition == dataSize-1)
                         scrollEnd = true;
                 } catch (Exception e) {
                     scrollEnd = false;
@@ -90,7 +93,7 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
     @Override
     protected void initHeaderFooterView() {
         super.initHeaderFooterView();
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_footer_layout,null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_footer_layout,mRecyclerView,false);
 
         mFooterLayout = (FooterView)view.findViewById(R.id.commom_footview);
 
@@ -104,7 +107,6 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
         });
 
         ((BaseRecyclerAdapter)mAdapter).addFooter(view);
-//        mRecyclerView.getLayoutManager().
     }
 
     public abstract RecyclerView.LayoutManager getLayoutManager();

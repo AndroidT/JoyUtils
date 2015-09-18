@@ -5,7 +5,7 @@ import com.joysoft.andutils.adapter.recycler.BaseRecyclerAdapter;
 /**
  * Created by fengmiao on 15/9/13.
  */
-public class MultipleCardAdapter extends BaseRecyclerAdapter{
+public abstract class MultipleCardAdapter extends BaseRecyclerAdapter{
 
     @Override
     public int getItemCount() {

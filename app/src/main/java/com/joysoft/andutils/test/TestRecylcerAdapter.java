@@ -25,22 +25,28 @@ public class TestRecylcerAdapter extends BaseRecyclerAdapter<JSONObject>{
         }
     }
 
+    /**
+     * 获取一个新的ViewHolder
+     *
+     * @param viewGroup
+     * @param type
+     * @return
+     */
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        super.onBindViewHolder(viewHolder, position);
-        if(!isFooter(position))
-          ((ViewHolder)viewHolder).mTextView.setText("位置是:"+position);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
-//        super.onCreateViewHolder(viewGroup,type);
-
-
-        if(type == TYPE_FOOTER)
-            return  super.onCreateViewHolder(viewGroup,type);
-
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.test_my_text_view,null);
+    public RecyclerView.ViewHolder onCreateHolder(ViewGroup viewGroup, int type) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.test_my_text_view,viewGroup,false);
         return new ViewHolder(v);
     }
+
+    /**
+     * 绑定数据
+     *
+     * @param viewHolder
+     * @param position
+     */
+    @Override
+    public void onBindData(RecyclerView.ViewHolder viewHolder, int position) {
+        ((ViewHolder)viewHolder).mTextView.setText("位置是:"+position);
+    }
+
 }

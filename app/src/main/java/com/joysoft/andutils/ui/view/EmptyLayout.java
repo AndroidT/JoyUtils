@@ -3,9 +3,11 @@ package com.joysoft.andutils.ui.view;
 import android.content.Context;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.joysoft.andutils.R;
@@ -19,7 +21,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
 
     ImageView imageView;
     TextView textView;
-    ContentLoadingProgressBar progressBar;
+    ProgressBar progressBar;
     LinearLayout linearLayout;
 
     OnClickListener mListener;
@@ -47,7 +49,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
         linearLayout = (LinearLayout)findViewById(R.id.ll_error);
         imageView = (ImageView)findViewById(R.id.img_error);
         textView = (TextView)findViewById(R.id.tv_error);
-        progressBar = (ContentLoadingProgressBar)findViewById(R.id.common_progressbar);
+        progressBar = (ProgressBar)findViewById(R.id.common_progressbar);
         imageView.setImageResource(R.drawable.default_empty_img);
 
         imageView.setOnClickListener(mListener);
@@ -86,7 +88,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
                //加载中...
                if(STATE_LOADING == state){
                    linearLayout.setVisibility(GONE);
-                   progressBar.show();
+                   progressBar.setVisibility(View.VISIBLE);
                    return;
                }
 
@@ -102,7 +104,7 @@ public class EmptyLayout extends FrameLayout implements IEmptyLayout{
                    textView.setText(R.string.load_error);
                }
 
-               progressBar.hide();
+               progressBar.setVisibility(View.GONE);
                linearLayout.setVisibility(VISIBLE);
 
 
