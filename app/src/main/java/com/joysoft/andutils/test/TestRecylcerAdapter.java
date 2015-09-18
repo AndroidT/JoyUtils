@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.joysoft.andutils.R;
 import com.joysoft.andutils.adapter.recycler.BaseRecyclerAdapter;
+import com.joysoft.andutils.lg.Lg;
 
 import org.json.JSONObject;
 
@@ -46,7 +47,11 @@ public class TestRecylcerAdapter extends BaseRecyclerAdapter<JSONObject>{
      */
     @Override
     public void onBindData(RecyclerView.ViewHolder viewHolder, int position) {
-        ((ViewHolder)viewHolder).mTextView.setText("位置是:"+position);
+        ((ViewHolder)viewHolder).mTextView.setText("位置是:" + position);
     }
 
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
 }

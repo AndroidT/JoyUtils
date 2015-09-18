@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
+ * 卡片基类。
+ * 配合RecyclerView使用
+ *
  * Created by fengmiao on 15/9/12.
  */
 public abstract  class BaseCard<T> extends RecyclerView.ViewHolder{
@@ -21,15 +24,12 @@ public abstract  class BaseCard<T> extends RecyclerView.ViewHolder{
     public abstract void onCreateView(ViewGroup viewGroup);
 
 
-
-    public void onViewAttacthedToWindow(){};
-
     public abstract  void onBindData(T data,int position);
 
-    public void onDetachedFromWidow(){};
 
-    public abstract void onViewRecycled();
+    public abstract void onViewAttachedToWindow();
 
+    public abstract void onViewDetachedFromWindow();
 
 
 
