@@ -69,7 +69,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
     //获取页面加载的url
     public abstract  String getUrl();
     //获取参数
-    public abstract HashMap<String,String> getParams(int index);
+    public abstract HashMap getParams(int index);
 
     public abstract IBaseAdapter getAdapter();
 
