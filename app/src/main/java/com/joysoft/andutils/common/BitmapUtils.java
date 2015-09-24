@@ -16,8 +16,11 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.os.Build.VERSION;
@@ -25,6 +28,7 @@ import android.os.Build.VERSION_CODES;
 import android.provider.MediaStore.Images;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.widget.ImageView;
 
 import com.joysoft.andutils.app.DeviceUtils;
 import com.joysoft.andutils.lg.Lg;
@@ -41,6 +45,20 @@ import java.io.InputStream;
  *
  */
 public class BitmapUtils {
+
+	/**
+	 * 使用TransitionDrawable实现图片显示的时候有渐变效果
+	 * @param imageView
+	 * @param bitmap
+	 */
+	private void setImageBitmap(Context mContext,ImageView imageView, Bitmap bitmap) {
+		// Use TransitionDrawable to fade in.
+		final TransitionDrawable td = new TransitionDrawable(new Drawable[] { new ColorDrawable(mContext.getResources().getColor(android.R.color.transparent)), new BitmapDrawable(mContext.getResources(), bitmap) });
+		//noinspection deprecation
+		imageView.setBackgroundDrawable(imageView.getDrawable());
+		imageView.setImageDrawable(td);
+		td.startTransition(200);
+	}
 	
 	/**
 	 * 获取图片规格:宽、高等

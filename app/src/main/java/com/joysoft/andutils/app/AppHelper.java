@@ -1,9 +1,11 @@
 package com.joysoft.andutils.app;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
@@ -17,6 +19,7 @@ import com.joysoft.andutils.R;
 import com.joysoft.andutils.common.TipUtils;
 import com.joysoft.andutils.lg.Lg;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +64,25 @@ public class AppHelper {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * 获取应用程序名称
+     */
+    public static String getAppName(Context context)
+    {
+        try
+        {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    context.getPackageName(), 0);
+            int labelRes = packageInfo.applicationInfo.labelRes;
+            return context.getResources().getString(labelRes);
+        } catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -115,7 +137,7 @@ public class AppHelper {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
 //                 intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
-            intent.setDataAndType(uri,"application/vnd.android.package-archive");
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
             context.startActivity(intent);
         }
     }
@@ -140,6 +162,31 @@ public class AppHelper {
             Intent intent = new Intent(Intent.ACTION_DELETE, uri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+        }
+    }
+
+    /**
+     * 启动APK的默认Activity
+     * @param ctx
+     * @param packageName
+     */
+    public static void startApkActivity(final Context ctx, String packageName) {
+        PackageManager pm = ctx.getPackageManager();
+        PackageInfo pi;
+        try {
+            pi = pm.getPackageInfo(packageName, 0);
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.setPackage(pi.packageName);List<ResolveInfo> apps = pm.queryIntentActivities(intent, 0);
+
+            ResolveInfo ri = apps.iterator().next();
+            if (ri != null) {
+                String className = ri.activityInfo.name;
+                intent.setComponent(new ComponentName(packageName, className));
+                ctx.startActivity(intent);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Lg.e(e.toString());
         }
     }
 
@@ -231,6 +278,52 @@ public class AppHelper {
             Lg.e(e.toString());
         }
         return isInstallShortcut;
+    }
+
+
+    /**
+     * 获取应用程序下所有Activity
+     * @param context
+     * @return
+     */
+    public static ArrayList<String>  getActivities(Context context){
+
+        try{
+            ArrayList<String> result = new ArrayList<String>();
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.setPackage(context.getPackageName());
+            for (ResolveInfo info : context.getPackageManager().queryIntentActivities(intent, 0)) {
+                result.add(info.activityInfo.name);
+            }
+            return result;
+        }catch (Exception e){
+            Lg.e(e.toString());
+        }
+            return null;
+    }
+
+    /**
+     * 检查有没有应用程序来接受处理你发出的intent
+     * @param context
+     * @param action
+     * @return
+     */
+    public static boolean isIntentAvailable(Context context, String action) {
+        final PackageManager packageManager = context.getPackageManager();
+        final Intent intent = new Intent(action);
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() != 0;
+    }
+
+    /**
+     * 获取已经安装APK(列表)的路径
+     * @param context
+     */
+    public void getInstalledPath(Context context){
+        PackageManager pm = context.getPackageManager();
+        for (ApplicationInfo app : pm.getInstalledApplications(0)){
+            Lg.d("package: " + app.packageName + ", sourceDir: " + app.sourceDir);
+        }
     }
 
     private static String getAuthorityFromPermission(Context context,

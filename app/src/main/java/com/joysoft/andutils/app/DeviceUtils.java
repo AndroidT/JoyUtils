@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -60,6 +61,15 @@ public class DeviceUtils {
 				.append("\nSCREEN_HEIGHT " + screenHeight)
 				.append("\nDENSITY " + density).toString();
 		return finalInfo;
+	}
+
+	/**
+	 * 判断是否是平板（官方用法）
+	 * @param context
+	 * @return
+	 */
+	public static boolean isTablet(Context context) {
+		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 	
 	/**
@@ -135,7 +145,11 @@ public class DeviceUtils {
 		return androidID;
 	}
 
-	
+	/**
+	 * 获取应用程序包名
+	 * @param context
+	 * @return
+	 */
 	public static final String getPackageName(Context context){
 		String packageName = "";
 		try{
@@ -397,4 +411,51 @@ public class DeviceUtils {
     	
         return size;
     }
+
+	/**
+	 * 获取当前屏幕截图，包含状态栏
+	 *
+	 * @param activity
+	 * @return
+	 */
+	public static Bitmap snapShotWithStatusBar(Activity activity)
+	{
+		View view = activity.getWindow().getDecorView();
+		view.setDrawingCacheEnabled(true);
+		view.buildDrawingCache();
+		Bitmap bmp = view.getDrawingCache();
+		int width = getScreenWidth(activity);
+		int height = getScreenHeight(activity);
+		Bitmap bp = null;
+		bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
+		view.destroyDrawingCache();
+		return bp;
+
+	}
+
+	/**
+	 * 获取当前屏幕截图，不包含状态栏
+	 *
+	 * @param activity
+	 * @return
+	 */
+	public static Bitmap snapShotWithoutStatusBar(Activity activity)
+	{
+		View view = activity.getWindow().getDecorView();
+		view.setDrawingCacheEnabled(true);
+		view.buildDrawingCache();
+		Bitmap bmp = view.getDrawingCache();
+		Rect frame = new Rect();
+		activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		int statusBarHeight = frame.top;
+
+		int width = getScreenWidth(activity);
+		int height = getScreenHeight(activity);
+		Bitmap bp = null;
+		bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
+				- statusBarHeight);
+		view.destroyDrawingCache();
+		return bp;
+
+	}
 }
