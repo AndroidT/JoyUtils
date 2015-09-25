@@ -12,10 +12,19 @@ import android.view.ViewGroup;
  */
 public abstract  class BaseCard<T> extends RecyclerView.ViewHolder{
 
-    public BaseCard(View itemView) {
-        super(itemView);
+//    public BaseCard(View itemView) {
+//        super(itemView);
+//    }
+
+    public BaseCard(){
+        super(null);
     }
 
+    void test(){
+
+    }
+
+    public abstract int getCardLayout();
 
     /**
      * 创建视图

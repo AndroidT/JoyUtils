@@ -33,3 +33,4 @@ proguard/
 
 build
 .gradle
+captures/Snapshot_2015.09.25_17.56.04.hprof

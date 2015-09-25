@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.joysoft.andutils.adapter.IBaseAdapter;
+import com.joysoft.andutils.common.StringUtils;
 import com.joysoft.andutils.http.ApiResponseHandler;
 import com.joysoft.andutils.http.CommonRequest;
 import com.joysoft.andutils.http.base.ResponseState;
@@ -69,7 +70,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
     //获取页面加载的url
     public abstract  String getUrl();
     //获取参数
-    public abstract HashMap getParams(int index);
+    public abstract Object getParams(int index);
 
     public abstract IBaseAdapter getAdapter();
 
@@ -170,42 +171,28 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
 
         String url = getUrl();
 
-        HashMap<String,String> params = getParams(index);
+        sendRequest(url,getParams(index),cacheEnable,index,action);
 
-        if(Lg.LogEnable){
+    }
 
-            if(params == null){
-                Lg.e("请求地址:"+url);
-                return;
-            }
+    protected void sendRequest(String url,Object params,boolean cacheEnable,final int index,final int action){
 
-            StringBuilder paramsStr = new StringBuilder();
-            paramsStr.append("?");
-            for(String key : params.keySet()){
-                paramsStr.append(key)
-                        .append("=")
-                        .append(params.get(key))
-                        .append("&");
-            }
-            Lg.e("地址为:\n"+(url+paramsStr));
-        }
 
-        CommonRequest.with(getActivity()).postRequest(url, params, new ApiResponseHandler() {
+        CommonRequest.with(getActivity()).postRequest(url, (HashMap<String,String>)params, new ApiResponseHandler() {
             @Override
             public void onCompleteParse(Object responseData) {
-                if(isDetached())
+                if (isDetached())
                     return;
-                refreshData(responseData,index,action);
+                refreshData(responseData, index, action);
             }
 
             @Override
             public void onError(ResponseState errorType) {
-                if(isDetached())
+                if (isDetached())
                     return;
-                updateState(MessageData.MESSAGE_STATE_ERROR,errorType,action);
+                updateState(MessageData.MESSAGE_STATE_ERROR, errorType, action);
             }
         }, cacheEnable);
-
     }
 
     /**

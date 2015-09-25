@@ -13,6 +13,8 @@ import com.joysoft.andutils.ui.view.EmptyLayout;
 import com.joysoft.andutils.ui.view.FooterView;
 
 /**
+ * RecyclerView:列表刷新
+ *
  * Created by fengmiao on 15/9/12.
  */
 public abstract class RecylerViewFragment extends BaseRefreshFragment{

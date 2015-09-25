@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * RecyclerView使用的BaseAdapter
+ *
  * Created by fengmiao on 15/9/12.
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implements IBaseAdapter<T> {

@@ -1,5 +1,6 @@
 package com.joysoft.andutils;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -22,6 +23,5 @@ public class MainActivity extends FragmentActivity {
                 .replace(R.id.main_rl,new TestRecycleViewFragment())
                 .commit();
     }
-
 
 }

@@ -6,9 +6,12 @@ import android.view.ViewGroup;
 
 import com.joysoft.andutils.card.BaseCard;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 
 /**
+ * 通用的 卡片Adapter
+ *
  * Created by fengmiao on 2015/9/18.
  */
 public abstract class CardAdapter extends BaseRecyclerAdapter{
@@ -23,36 +26,59 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
             return getCardType(position);
     }
 
+
+    /**
+     * 子类依据position 来判断 当前应该加载那种类型的卡片
+     * @param position
+     * @return type 需要加载的卡片在mCardList中的位置
+     */
     public abstract int getCardType(int position);
 
+    /**
+     * 设置一共需要加载多少种卡片
+     * @param params
+     */
     public abstract void setupCardList(ArrayList params);
 
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
-        return super.onCreateViewHolder(viewGroup, type);
-    }
-
+    /**
+     * 在这里初始化卡片
+     *
+     * @param viewGroup
+     * @param type 当前卡片在 mCardList中的下标
+     * @return
+     */
     @Override
     public RecyclerView.ViewHolder onCreateHolder(ViewGroup viewGroup, int type) {
-        return super.onCreateViewHolder(viewGroup,type);
+//        return super.onCreateViewHolder(viewGroup,type);
+
+        Class cardCls = mCardList.get(type);
+//        cardCls.getConstructor()
+        return null;
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        super.onBindViewHolder(viewHolder, position);
-    }
-
+    /**
+     * 绑定数据
+     * @param viewHolder
+     * @param position
+     */
     @Override
     public void onBindData(RecyclerView.ViewHolder viewHolder, int position) {
 
     }
 
+
+//    /**
+//     * 当卡片 attach 到 recyclerview上时被调用:
+//     *  <br>可以在 此处初始化状态
+//     * @param holder
+//     */
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         ((BaseCard)holder).onViewAttachedToWindow();
     }
+
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
@@ -61,7 +87,7 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
     }
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
     }
 }
