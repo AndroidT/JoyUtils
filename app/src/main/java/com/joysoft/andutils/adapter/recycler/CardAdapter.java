@@ -2,11 +2,15 @@ package com.joysoft.andutils.adapter.recycler;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.joysoft.andutils.R;
 import com.joysoft.andutils.card.BaseCard;
+import com.joysoft.andutils.lg.Lg;
 
-import java.lang.reflect.Proxy;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +21,17 @@ import java.util.ArrayList;
 public abstract class CardAdapter extends BaseRecyclerAdapter{
 
     ArrayList<Class<BaseCard>> mCardList = new ArrayList<>();
+
+    int cardviewId;
+
+    public CardAdapter(){
+        this(R.layout.cardview);
+    }
+
+    public CardAdapter(int cardviewId){
+        this.cardviewId = cardviewId;
+        setupCardList(mCardList);
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -36,9 +51,9 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
 
     /**
      * 设置一共需要加载多少种卡片
-     * @param params
+     * @param mCardList
      */
-    public abstract void setupCardList(ArrayList params);
+    public abstract void setupCardList(ArrayList mCardList);
 
 
     /**
@@ -50,10 +65,20 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
      */
     @Override
     public RecyclerView.ViewHolder onCreateHolder(ViewGroup viewGroup, int type) {
-//        return super.onCreateViewHolder(viewGroup,type);
 
         Class cardCls = mCardList.get(type);
-//        cardCls.getConstructor()
+        BaseCard baseCard;
+        try {
+            Class[] paramTypes = {View.class};
+            View cardView = LayoutInflater.from(viewGroup.getContext()).inflate(cardviewId,viewGroup,false);
+            Object[] params = {cardView};
+            Constructor constructor = cardCls.getConstructor(paramTypes);
+            baseCard = (BaseCard)constructor.newInstance(params);
+            return baseCard;
+        }catch (Exception e){
+            Lg.e(e.toString()+" case："+e.getCause().toString());
+        }
+
         return null;
     }
 
@@ -64,7 +89,7 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
      */
     @Override
     public void onBindData(RecyclerView.ViewHolder viewHolder, int position) {
-
+        ((BaseCard)viewHolder).onBindData(dataList.get(position),position);
     }
 
 
@@ -76,6 +101,7 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
+        if(holder instanceof BaseCard)
         ((BaseCard)holder).onViewAttachedToWindow();
     }
 
@@ -83,6 +109,7 @@ public abstract class CardAdapter extends BaseRecyclerAdapter{
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
+        if(holder instanceof  BaseCard)
         ((BaseCard)holder).onViewDetachedFromWindow();
     }
 

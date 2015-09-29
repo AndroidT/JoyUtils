@@ -7,6 +7,7 @@ import com.joysoft.andutils.R;
 import com.joysoft.andutils.adapter.IBaseAdapter;
 import com.joysoft.andutils.fragment.RecylerViewFragment;
 import com.joysoft.andutils.lg.Lg;
+import com.joysoft.andutils.test.card.TestCardAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,7 +46,8 @@ public class TestRecycleViewFragment extends RecylerViewFragment{
 
     @Override
     public IBaseAdapter getAdapter() {
-        return new TestRecylcerAdapter();
+//        return new TestRecylcerAdapter();
+        return mAdapter == null ? new TestCardAdapter() : mAdapter;
     }
 
     /**

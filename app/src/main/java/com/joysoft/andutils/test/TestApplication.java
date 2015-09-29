@@ -13,7 +13,7 @@ public class TestApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Lg.LogEnable = false;
+        Lg.LogEnable = true;
 
     }
 }
