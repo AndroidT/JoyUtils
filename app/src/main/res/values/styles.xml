@@ -5,4 +5,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- 网络加载框 -->
+    <style name="LoadingDialogTheme">
+        <item name="android:windowFrame">@null</item> <!-- 边框 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item> <!-- 模糊 -->
+    </style>
+
 </resources>

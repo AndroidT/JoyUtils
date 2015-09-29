@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.security.MessageDigest;
 import java.util.Locale;
+
 /**
  * 加密工具:
  * 	<br>md5加密
