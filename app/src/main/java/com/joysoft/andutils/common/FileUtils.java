@@ -3,6 +3,8 @@ package com.joysoft.andutils.common;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
+import com.joysoft.andutils.common.data.SecurityUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

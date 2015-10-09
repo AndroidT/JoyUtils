@@ -8,7 +8,7 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.text.TextUtils;
 
-import com.joysoft.utils.lg.Lg;
+import com.joysoft.andutils.lg.Lg;
 
 import java.util.ArrayList;
 import java.util.Timer;

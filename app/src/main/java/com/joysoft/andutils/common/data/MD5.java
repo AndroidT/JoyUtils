@@ -1,4 +1,4 @@
-package com.joysoft.andutils.common;
+package com.joysoft.andutils.common.data;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
