@@ -28,6 +28,7 @@ import java.util.Map;
  * @author fengmiao
  *
  */
+@Deprecated
 public abstract class PostFile extends AsyncTask<HashMap<String, String>, Void, String>{
 
 	Context context;

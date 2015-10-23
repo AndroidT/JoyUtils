@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.joysoft.andutils.adapter.IBaseAdapter;
-import com.joysoft.andutils.common.StringUtils;
 import com.joysoft.andutils.http.ApiResponseHandler;
-import com.joysoft.andutils.http.CommonRequest;
+import com.joysoft.andutils.http.RequestWrapper;
 import com.joysoft.andutils.http.base.ResponseState;
-import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.IFooterLayout;
 
@@ -178,7 +176,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
     protected void sendRequest(String url,Object params,boolean cacheEnable,final int index,final int action){
 
 
-        CommonRequest.with(getActivity()).postRequest(url, (HashMap<String,String>)params, new ApiResponseHandler() {
+        RequestWrapper.with(getActivity()).postRequest(url, (HashMap<String,String>)params, new ApiResponseHandler() {
             @Override
             public void onCompleteParse(Object responseData) {
                 if (isDetached())

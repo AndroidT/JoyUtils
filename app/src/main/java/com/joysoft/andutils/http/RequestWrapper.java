@@ -24,26 +24,26 @@ import java.util.Map;
  *  <br> 1、使用post提交数据时  参数类型为Map
  *  <br> 2、返回的数据为Json数据
  */
-public class CommonRequest implements BaseRequest<HashMap<String,String>,String> {
+public class RequestWrapper implements BaseRequest<HashMap<String,String>,String> {
 
 
-    public static CommonRequest instance;
+    public static RequestWrapper instance;
     public static RequestQueue requestQueue;
 
-    private CommonRequest() {}
+    private RequestWrapper() {}
 
 
 
-    public static CommonRequest with(Context context) {
+    public static RequestWrapper with(Context context) {
 
         if(context == null)
             throw new IllegalArgumentException("the context cannot be null");
 
         if (instance == null){
-            synchronized (CommonRequest.class) {
-                CommonRequest temp = instance;
+            synchronized (RequestWrapper.class) {
+                RequestWrapper temp = instance;
                 if (temp == null) {
-                    temp = new CommonRequest();
+                    temp = new RequestWrapper();
                     instance = temp;
                 }
             }
