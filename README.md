@@ -1,5 +1,5 @@
 ﻿###Adapter：
-* IBaseAdapter
+* interface IBaseAdapter : `AbsBaseAdapter` and `BaseRecyclerAdapter`
 * extends `BaseAdapter`:
     * AbsBaseAdapter
 * extends `RecyclerView.Adapter`:
@@ -56,7 +56,7 @@ public class TestRecylcerAdapter extends BaseRecyclerAdapter<JSONObject>{
     @Override
     public void onBindData(RecyclerView.ViewHolder viewHolder, int position) {
         TextView textView = ((BaseRecyclerHolder) viewHolder).getView(R.id.test_tv);
-        textView.setText("位置是:"+position);
+        textView.setText("position:"+position);
     }
 
 }
@@ -119,3 +119,8 @@ public class TestCardAdapter extends CardAdapter {
 }
 
 ```
+####RefreshFragment
+`BaseRefreshFragment` is used by loading list data,you can refresh or load more data here.and also
+you can implement a custom style and other custom action.
+Usually you can extends `ListViewFragment` or `RecylerViewFragment`、or `BaseRefreshFragment`
+
