@@ -1,6 +1,7 @@
 package com.joysoft.andutils.adapter.recycler;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 

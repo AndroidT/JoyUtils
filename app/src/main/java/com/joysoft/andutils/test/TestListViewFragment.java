@@ -2,9 +2,13 @@ package com.joysoft.andutils.test;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.joysoft.andutils.R;
+import com.joysoft.andutils.adapter.AbsBaseAdapter;
 import com.joysoft.andutils.adapter.IBaseAdapter;
+import com.joysoft.andutils.fragment.ListViewFragment;
 import com.joysoft.andutils.fragment.RecylerViewFragment;
 import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.test.card.TestCardAdapter;
@@ -19,12 +23,7 @@ import java.util.List;
 /**
  * Created by fengmiao on 15/9/13.
  */
-public class TestRecycleViewFragment extends RecylerViewFragment{
-
-    @Override
-    public RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(getActivity());
-    }
+public class TestListViewFragment extends ListViewFragment{
 
 
     String path = "http://apiv2.9dxz.cn:81/content/getContentList";
@@ -34,7 +33,7 @@ public class TestRecycleViewFragment extends RecylerViewFragment{
     }
 
     @Override
-    public HashMap<String, String> getParams(int index) {
+    public Object getParams(int index) {
         HashMap<String,String> parmas = new HashMap<>();
         parmas.put("pagenum",index+"");
         parmas.put("pagesize","10");
@@ -44,19 +43,6 @@ public class TestRecycleViewFragment extends RecylerViewFragment{
         return parmas;
     }
 
-    @Override
-    public IBaseAdapter getAdapter() {
-        return new TestRecylcerAdapter();
-//        return mAdapter == null ? new TestCardAdapter() : mAdapter;
-    }
-
-    /**
-     * 解析列表数据
-     *
-     * @param result
-     * @param index
-     * @return result
-     */
     @Override
     public List getContentList(Object result, int index) {
 
@@ -78,21 +64,28 @@ public class TestRecycleViewFragment extends RecylerViewFragment{
         return mList;
     }
 
-    /**
-     * 获取要加载的视图Id
-     *
-     * @return
-     */
     @Override
-    public int getLayoutId() {
-        return R.layout.fragment_base_recyclrefresh;
+    public IBaseAdapter getAdapter() {
+//        return mAdapter == null ? new TestAbsAdapter(getActivity()) : mAdapter;
+        if(mAdapter != null)
+            return mAdapter;
+
+        return  new AbsBaseAdapter(getActivity()) {
+            @Override
+            public int getLayoutID() {
+                return  R.layout.test_my_text_view;
+            }
+
+            @Override
+            public void onBindViewHolder(int position, ViewHolder holder, ViewGroup parent) {
+                TextView textView = (TextView) holder.getView(R.id.test_tv);
+                textView.setText(position+"");
+            }
+        };
     }
 
-    /**
-     * dealloc无用对象
-     */
     @Override
-    public void recycle() {
-
+    public int getLayoutId() {
+        return R.layout.fragment_base_listrefresh;
     }
 }

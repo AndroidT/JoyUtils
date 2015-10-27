@@ -33,7 +33,7 @@ public class TestImageCard extends BaseCard {
     }
 
     @Override
-    public void initView() {
+        public void initView() {
         mTestView = (TextView)itemView.findViewById(R.id.test_tv);
         imageView = (ImageView)itemView.findViewById(R.id.test_img);
     }

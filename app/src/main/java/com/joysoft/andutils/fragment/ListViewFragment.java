@@ -57,26 +57,33 @@ public abstract class ListViewFragment extends  BaseRefreshFragment implements
         mListView = (ListView)root.findViewById(R.id.fragment_listview);
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
-        mListView.setAdapter((BaseAdapter) mAdapter);
+
 
     }
+
 
     @Override
     protected void initHeaderFooterView() {
 
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_footer_layout,null);
-
-        mFooterLayout = (FooterView)view.findViewById(R.id.commom_footview);
+        mFooterLayout = (FooterView)LayoutInflater.from(getContext()).inflate(R.layout.view_footer_layout,null);
 
         mFooterLayout.setOnLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mState != STATE_LOADING){
+                if (mState != STATE_LOADING) {
                     onLoadNextPage();
                 }
             }
         });
+
+        /**
+         * Note: When first introduced,
+         * this method could only be called before setting the adapter with setAdapter(ListAdapter).
+         * Starting with KITKAT, this method may be called at any time.
+         */
         mListView.addFooterView(mFooterLayout.getView());
+
+        mListView.setAdapter((BaseAdapter) mAdapter);
     }
 
 
