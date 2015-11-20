@@ -15,6 +15,9 @@ public abstract class ApiResponseHandler extends ResponseHandler<Object,JSONObje
 
     int resultCode;
 
+    public static String KEY_STATE = "status";
+    public static String KEY_DATA = "rows";
+
     @Override
     public void setResultData(JSONObject jsonObject) {
         try{
@@ -24,9 +27,9 @@ public abstract class ApiResponseHandler extends ResponseHandler<Object,JSONObje
                 return;
             }
 
-           resultCode = Integer.parseInt(jsonObject.getString("status"));
+           resultCode = Integer.parseInt(jsonObject.getString(KEY_STATE));
 
-            Object content = jsonObject.get("rows");
+            Object content = jsonObject.get(KEY_DATA);
 
             if(!isOk() || content == null){
                 onError((isOk() && content == null) ? ResponseState.ERROR_DATA_NULL : ResponseState.ERROR_DATA_PARSE);
