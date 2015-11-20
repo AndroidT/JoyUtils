@@ -50,7 +50,11 @@ public class ViewPageFragmentAdapter extends FragmentPagerAdapter
     }
     
     public void addTab(String title, String tag, Class<?> clss, Bundle args) {
-        ViewPageInfo info = new ViewPageInfo(title, tag, clss, args);
+        addTab(title,-1,tag,clss,args);
+    }
+
+    public void addTab(String title,int iconResId,String tag,Class<?> clss,Bundle args){
+        ViewPageInfo info = new ViewPageInfo(title,iconResId,tag, clss, args);
         mTabs.add(info);
     }
     
