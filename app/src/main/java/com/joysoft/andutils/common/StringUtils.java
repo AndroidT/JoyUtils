@@ -31,7 +31,7 @@ public class StringUtils {
             cmb.setPrimaryClip(ClipData.newPlainText(null, content.trim()));
         }catch(Exception e){
             Lg.e(e.toString());
-            TipUtils.ShowText(context, "复制失败...");
+            TipUtils.showText(context, "复制失败...");
         }
     }
 

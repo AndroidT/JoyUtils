@@ -35,7 +35,7 @@ public class NetUtils {
             }
             context.startActivity(intent);
         }catch(Exception e){
-        	TipUtils.ShowText(context, "操作失败");
+        	TipUtils.showText(context, "操作失败");
         }
     }
 	

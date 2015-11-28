@@ -198,7 +198,7 @@ public class LittleUtils {
 					Uri.parse("tel:" + phoneNumber));
 			context.startActivity(myIntentDial);
 		} catch (Exception e) {
-			TipUtils.ShowText(context, "操作失败");
+			TipUtils.showText(context, "操作失败");
 		}
 	}
 	/**
@@ -216,7 +216,7 @@ public class LittleUtils {
 				intent.putExtra(Intent.EXTRA_STREAM, u);
 				context.startActivity(Intent.createChooser(intent, "分享"));
 			} catch (Exception e) {
-				TipUtils.ShowText(context, "操作失败");
+				TipUtils.showText(context, "操作失败");
 			}
 		}
 
@@ -233,7 +233,7 @@ public class LittleUtils {
 //	        it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");  
 	        context.startActivity(it); 
 		}catch(Exception e){
-			TipUtils.ShowText(context, "暂无应用可执行此操作");
+			TipUtils.showText(context, "暂无应用可执行此操作");
 		}
 	}
 	
@@ -249,7 +249,7 @@ public class LittleUtils {
 				intent.setDataAndType(Uri.fromFile(new File(path)), "image/*");
 				context.startActivity(intent);
 			}catch(Exception e){
-				TipUtils.ShowText(context, "操作失败");
+				TipUtils.showText(context, "操作失败");
 			}
 		}
 	}

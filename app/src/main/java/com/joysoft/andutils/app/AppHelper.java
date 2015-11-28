@@ -106,7 +106,7 @@ public class AppHelper {
             intent_aboutus.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// xy
             context.startActivity(intent_aboutus);
         } catch (Exception e) {
-            TipUtils.ShowText(context, "没有应用可执行此操作");
+            TipUtils.showText(context, "没有应用可执行此操作");
         }
     }
 
@@ -150,7 +150,7 @@ public class AppHelper {
     public static void uninstallApp(Context context, String packageName) {
         boolean installed = installedApp(context, packageName);
         if (!installed) {
-            TipUtils.ShowText(context, "package_not_installed");
+            TipUtils.showText(context, "package_not_installed");
             return;
         }
 
@@ -250,7 +250,7 @@ public class AppHelper {
             activity.sendBroadcast(shortcutintent);
         }catch(Exception e){
             Lg.e(e.toString());
-            TipUtils.ShowText(activity, "操作失败...");
+            TipUtils.showText(activity, "操作失败...");
         }
     }
 
