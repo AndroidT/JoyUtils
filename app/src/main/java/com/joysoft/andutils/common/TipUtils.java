@@ -25,7 +25,7 @@ public class TipUtils {
 	 * @param context
 	 * @param text
 	 */
-	public static void ShowText(Context context, String text) {
+	public static void showText(Context context, String text) {
 		
 		if(mText.equals(text) && isShowing())
 			return;

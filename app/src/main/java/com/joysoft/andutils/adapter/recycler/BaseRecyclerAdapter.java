@@ -173,7 +173,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implem
 
     @Override
     public int getTotalCount() {
-        return getItemCount();
+        if(footerView == null)
+            return getItemCount();
+        else
+            return getItemCount() - 1;
     }
 
 }

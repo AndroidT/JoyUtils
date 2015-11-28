@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment{
     /**
      * dealloc无用对象
      */
-    public abstract  void recycle();
+    public  void recycle(){}
 
     @Nullable
     @Override
@@ -45,6 +45,8 @@ public abstract class BaseFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
     }
+
+    public boolean onBackPressed(){return  false;}
 
     @Override
     public void onDestroyView() {

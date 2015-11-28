@@ -148,7 +148,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
         getData(pageIndex, LISTVIEW_ACTION_SCROLL);
     }
 
-    private  void getData(final int index,final int action){
+    protected void getData(final int index,final int action){
 
         if(!callInitView)
             throw new IllegalStateException("-- you must call super method in initViews(root) ----");
@@ -199,7 +199,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * @param index    当前页数
      * @param action    ListViewAction
      */
-    void refreshData(Object result,int index,int action){
+    protected void refreshData(Object result,int index,int action){
 
         //获取列表数据
         List content = getContentList(result,index);
@@ -277,6 +277,7 @@ action){
                 if(errorType == ResponseState.ERROR_NETWORK)
                     mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_NET);
 
+                mFooterLayout.hideLayout();
                 mEmptyLayout.showEmptyLayout();
                 return;
             }
@@ -290,6 +291,7 @@ action){
             if(mAdapter.getTotalCount() == 0 && mEmptyLayout != null){
                 mEmptyLayout.setLayoutState(IEmptyLayout.STATE_ERROR_DATA_NULL);
                 mEmptyLayout.showEmptyLayout();
+                mFooterLayout.hideLayout();
                 return;
             }else{
                 setFooterNoMoreState();

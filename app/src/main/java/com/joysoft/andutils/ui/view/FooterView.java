@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.joysoft.andutils.R;
+import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IFooterLayout;
 
 /**
@@ -57,6 +58,8 @@ public class FooterView extends LinearLayout implements IFooterLayout{
 
                int textRes = R.string.load_more;
 
+               showLayout();
+
                if(STATE_LOADING == state){
                    progressBar.setVisibility(View.VISIBLE);
                    textRes = R.string.load_ing;
@@ -91,7 +94,12 @@ public class FooterView extends LinearLayout implements IFooterLayout{
      */
     @Override
     public void showLayout() {
-        setVisibility(VISIBLE);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setVisibility(VISIBLE);
+            }
+        });
     }
 
     /**
@@ -99,7 +107,12 @@ public class FooterView extends LinearLayout implements IFooterLayout{
      */
     @Override
     public void hideLayout() {
-        setVisibility(GONE);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setVisibility(GONE);
+            }
+        });
     }
 
     /**

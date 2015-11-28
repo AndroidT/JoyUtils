@@ -27,35 +27,14 @@ public class SDUtils {
         long totalBlocks = stat.getBlockCount();  
         return Formatter.formatFileSize(context, blockSize * totalBlocks);  
     }  
-  
-	/**
-	 * 获取Sd卡剩余空间
-	 * 
-	 * @return
-	 */
-	public static long getAvaiableSpace() {
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			String sdcard = Environment.getExternalStorageDirectory().getPath();
-			StatFs statFs = new StatFs(sdcard);
-			long blockSize = statFs.getBlockSize();
-			long blocks = statFs.getAvailableBlocks();
-			long availableSpare = (blocks * blockSize) / (1024 * 1024);
 
-			return availableSpare;
-		}
-		return -1;
-	}
 
 	/**
-	 * 判断当前sd卡是否有效使用
+	 * 判断当前可用空间   没有sd卡时使用机身分配的空间
 	 * 
 	 * @return trueΪ
 	 */
 	public static boolean isSDAvailable(int minSDSize) {
-		String status = Environment.getExternalStorageState();
-		if (!status.equals(Environment.MEDIA_MOUNTED))
-			return false;
 		if (!isAvaiableSpace(minSDSize)) {
 			return false;
 		}
@@ -63,11 +42,33 @@ public class SDUtils {
 	}
 	
 	/**
-	 * 判断当前sd卡剩余空间是否够用
+	 * 判断当前app可用剩余空间是否够用
 	 * @param sizeMb
 	 * @return
 	 */
 	private static boolean isAvaiableSpace(int sizeMb) {
 		return getAvaiableSpace() > sizeMb;
 	}
+
+	/**
+	 * 获取当前app可用空间
+	 *
+	 * @return  单位 M
+	 */
+	public static long getAvaiableSpace() {
+		String sdCard = "";
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			sdCard = Environment.getExternalStorageDirectory().getPath();
+		} else {
+			sdCard = Environment.getDataDirectory().getPath();
+		}
+		StatFs statFs = new StatFs(sdCard);
+		long blockSize = statFs.getBlockSize();
+		long blocks = statFs.getAvailableBlocks();
+		long spare = (blocks * blockSize) / (1024 * 1024);
+		//Lg.d("calcAvailableSpare:" + spare);
+		return spare;
+	}
+
+
 }

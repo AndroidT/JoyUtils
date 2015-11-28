@@ -78,7 +78,7 @@ public abstract class RecylerViewFragment extends BaseRefreshFragment{
                     int childLayoutPosition = recyclerView.getChildLayoutPosition(mFooterLayout.getView());
                     int dataSize = mAdapter.getTotalCount();
 
-                    if (childLayoutPosition == dataSize-1)
+                    if (childLayoutPosition == dataSize)
                         scrollEnd = true;
                 } catch (Exception e) {
                     scrollEnd = false;
