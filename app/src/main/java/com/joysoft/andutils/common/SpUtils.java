@@ -71,6 +71,10 @@ public class SpUtils {
 	public String getMessString(String key) {
 		return sp.getString(key, "");
 	}
+
+	public String getMessString(String key,String defualt) {
+		return sp.getString(key, defualt);
+	}
 	
 	public int getMessInt(String key) {
 		return sp.getInt(key, -1);
