@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.android.volley.VolleyLog;
-import com.joysoft.andutils.http.base.VolleyUtils;
-import com.joysoft.andutils.lg.Lg;
-import com.joysoft.andutils.test.TestListViewFragment;
+ import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.test.TestRecycleViewFragment;
 
 public class MainActivity extends FragmentActivity {

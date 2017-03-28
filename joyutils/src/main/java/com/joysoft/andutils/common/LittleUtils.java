@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.joysoft.andutils.lg.Lg;
 
@@ -339,5 +342,19 @@ public class LittleUtils {
 			return  f / 100;
 		}
 		return 0;
+	}
+
+	public static void togglePassword(EditText inputView, TextView indicator) {
+		int type = inputView.getInputType();
+		Lg.d("the type is :" + type);
+		if (type != InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+			type = InputType.TYPE_TEXT_VARIATION_PASSWORD;
+			indicator.setText("隐藏密码");
+		} else {
+			type = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+			indicator.setText("显示密码");
+		}
+		inputView.setInputType(type);
+		inputView.setSelection(inputView.getText().length());
 	}
 }

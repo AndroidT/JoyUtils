@@ -3,6 +3,7 @@ package com.joysoft.andutils.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.joysoft.andutils.adapter.IBaseAdapter;
 import com.joysoft.andutils.http.ApiResponseHandler;
 import com.joysoft.andutils.http.RequestWrapper;
 import com.joysoft.andutils.http.base.ResponseState;
+import com.joysoft.andutils.lg.Lg;
 import com.joysoft.andutils.ui.IEmptyLayout;
 import com.joysoft.andutils.ui.IFooterLayout;
 
@@ -145,7 +147,8 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      */
     protected void onLoadNextPage(){
         int pageIndex = mAdapter.getTotalCount() / PageSize + 1;
-        getData(pageIndex, LISTVIEW_ACTION_SCROLL);
+        mListViewAction = LISTVIEW_ACTION_SCROLL;
+        getData(pageIndex, mListViewAction);
     }
 
     protected void getData(final int index,final int action){
@@ -246,7 +249,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * @param action
      */
     void updateState(MessageData messageData,ResponseState errorType,int
-action){
+            action){
         mMessageState = messageData;
 
         // 加载结束
@@ -321,9 +324,9 @@ action){
      *      如果要实现预加载数据可以重写onScrollStateChanged方法
      *  </li>
      */
-    protected void onScrollLoad() {
+    protected synchronized void onScrollLoad() {
 
-        if(mAdapter  == null || mAdapter.getTotalCount() == 0)
+        if(mAdapter  == null || mAdapter.getTotalCount() == 0 )
             return;
 
         // footer 没有设置或 是隐藏状态 则直接返回
@@ -344,7 +347,7 @@ action){
 
 
 
-            onLoadNextPage();
+        onLoadNextPage();
     }
 
     public void setPageSize(int pageSize){
