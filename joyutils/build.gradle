@@ -2,7 +2,7 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'maven'
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -31,14 +31,14 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    publish {
-        userOrg = 'codervast'//bintray.com用户名
-        groupId = 'com.fm.utils'//jcenter上的路径
-        artifactId = 'joyutils'//项目名称
-        publishVersion = '1.0.0'//版本号
-        desc = 'common tools for android'//描述，不重要
-        website = 'https://github.com/AndroidT/JoyUtils'//网站，不重要
-    }
+//    publish {
+//        userOrg = 'codervast'//bintray.com用户名
+//        groupId = 'com.fm.utils'//jcenter上的路径
+//        artifactId = 'joyutils'//项目名称
+//        publishVersion = '1.0.1'//版本号
+//        desc = 'common tools for android'//描述，不重要
+//        website = 'https://github.com/AndroidT/JoyUtils'//网站，不重要
+//    }
 
 
 }
@@ -53,3 +53,31 @@ dependencies {
 //    compile 'org.apache.httpcomponents:httpmime:4.1.2'
 }
 
+
+ext {
+    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
+    bintrayName = 'joyutils'//bintray上的项目名
+
+    publishedGroupId = 'com.fm.utils'//JCenter的GroupId
+    artifact = 'joyutils'//JCenter的ArtifactId
+
+    siteUrl = 'https://github.com/AndroidT/JoyUtils'
+    gitUrl = 'https://github.com/AndroidT/JoyUtils'
+
+    libraryVersion = '1.0.3'//版本号
+    libraryName = 'joyutils'//项目名字，没什么用
+    libraryDescription = 'A tool for Android'//项目描述，没什么用
+
+    //开发者信息
+    developerId = 'codervast'
+    developerName = 'codervast'
+    developerEmail = 'codervast@gmail.com'
+
+    //以上所有信息自行修改，以下不变
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
+apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/bintray.gradle'

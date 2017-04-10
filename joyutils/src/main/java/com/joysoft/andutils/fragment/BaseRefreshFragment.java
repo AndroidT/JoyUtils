@@ -248,7 +248,7 @@ public abstract class BaseRefreshFragment extends  BaseFragment implements
      * @param errorType
      * @param action
      */
-    void updateState(MessageData messageData,ResponseState errorType,int
+    protected void updateState(MessageData messageData,ResponseState errorType,int
             action){
         mMessageState = messageData;
 
