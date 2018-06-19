@@ -26,7 +26,6 @@ public class FooterView extends LinearLayout implements IFooterLayout{
 
     public FooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
 

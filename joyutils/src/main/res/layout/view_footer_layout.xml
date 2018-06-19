@@ -14,6 +14,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
+        android:visibility="gone"
         />
 
     <TextView
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/load_ing" />
+        android:text="@string/load_full" />
 
 
 </com.joysoft.andutils.ui.view.FooterView>

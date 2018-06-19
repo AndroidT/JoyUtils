@@ -55,18 +55,40 @@ dependencies {
 
 
 ext {
-    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
-    bintrayName = 'joyutils'//bintray上的项目名
+//    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
+//    bintrayName = 'joyutils'//bintray上的项目名
+//
+//    publishedGroupId = 'com.fm.utils'//JCenter的GroupId
+//    artifact = 'joyutils'//JCenter的ArtifactId
+//
+//    siteUrl = 'https://github.com/AndroidT/JoyUtils'
+//    gitUrl = 'https://github.com/AndroidT/JoyUtils'
+//
+//    libraryVersion = '1.0.4'//版本号
+//    libraryName = 'joyutils'//项目名字，没什么用
+//    libraryDescription = 'A tool for Android'//项目描述，没什么用
+//
+//    //开发者信息
+//    developerId = 'codervast'
+//    developerName = 'codervast'
+//    developerEmail = 'codervast@gmail.com'
+//
+//    //以上所有信息自行修改，以下不变
+//
+//    licenseName = 'The Apache Software License, Version 2.0'
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//    allLicenses = ["Apache-2.0"]
 
-    publishedGroupId = 'com.fm.utils'//JCenter的GroupId
-    artifact = 'joyutils'//JCenter的ArtifactId
+//    package_userOrg = 'com.fm.utils' // 组织名 不填默认用户名
+    package_repo = 'maven' // bintray上的仓库名，一般为maven
+    package_type = 'aar'  // 输出类型
+    package_group = 'com.fm.utils' // JCenter的GroupId
+    package_artifact = 'joyutils' // JCenter的ArtifactId
+    package_version = '1.0.41'  // JCenter的VersionId
+    package_description = 'A tool for Android'
 
     siteUrl = 'https://github.com/AndroidT/JoyUtils'
     gitUrl = 'https://github.com/AndroidT/JoyUtils'
-
-    libraryVersion = '1.0.3'//版本号
-    libraryName = 'joyutils'//项目名字，没什么用
-    libraryDescription = 'A tool for Android'//项目描述，没什么用
 
     //开发者信息
     developerId = 'codervast'
@@ -79,5 +101,6 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 }
-apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
-apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/bintray.gradle'
+//apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
+//apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/bintray.gradle'
+apply from:'https://raw.githubusercontent.com/Jude95/JCenter/v2/bintray.gradle'

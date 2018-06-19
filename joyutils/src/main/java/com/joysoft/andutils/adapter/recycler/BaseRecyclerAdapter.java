@@ -11,6 +11,7 @@ import com.joysoft.andutils.lg.Lg;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * RecyclerView使用的BaseAdapter
  *
@@ -20,6 +21,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter implem
 
     public List<T> dataList = new ArrayList<T>();
     private final Object mLock = new Object();
+
+    public interface OnItemClick{
+        public void onClick(int index,View view);
+    }
+
+    protected OnItemClick onItemClick;
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
 
     private View footerView;
 
@@ -189,5 +200,7 @@ class HeaderFooterViewHodler extends  RecyclerView.ViewHolder{
         super(itemView);
         this.itemView = itemView;
     }
+
+
 
 }
